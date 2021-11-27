@@ -1,0 +1,22 @@
+{
+  "items": [
+    {
+      "id": 1,
+      "title": "Dune",
+      "background": "https://upload.wikimedia.org/wikipedia/ru/f/f1/%D0%94%D1%8E%D0%BD%D0%B0_%D0%BE%D1%84%D0%B8%D1%86%D0%B8%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9_%D0%BF%D0%BE%D1%81%D1%82%D0%B5%D1%80.jpg",
+      "mainBackground": "https://img5.goodfon.com/original/1920x1080/2/3f/diuna-dune-poster-2021-timoti-shalame-timothee-chalamet-paul.jpg"
+    },
+    {
+      "id": 2,
+      "title": "Spider Man",
+      "background": "https://m.media-amazon.com/images/M/MV5BZDEyN2NhMjgtMjdhNi00MmNlLWE5YTgtZGE4MzNjMTRlMGEwXkEyXkFqcGdeQXVyNDUyOTg3Njg@._V1_FMjpg_UX1000_.jpg",
+      "mainBackground": "https://img5.goodfon.com/original/1920x1200/5/1f/girl-city-action-superheroes-beautiful-home-italy-bridge-j-1.jpg"
+    },
+    {
+      "id": 3,
+      "title": "Iron Man",
+      "background": "https://m.media-amazon.com/images/M/MV5BMTczNTI2ODUwOF5BMl5BanBnXkFtZTcwMTU0NTIzMw@@._V1_.jpg",
+      "mainBackground": "https://img5.goodfon.com/original/1920x1200/c/b9/iron-man-rober-downe-jr-gwyneth-paltrow-2008-art-zheleznyi-c.jpg"
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+.slider {
+  display: flex;
+  touch-action: none;
+  transform: translateY(100px);
+}

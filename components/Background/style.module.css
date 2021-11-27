@@ -1,0 +1,43 @@
+.background {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  background: rgb(196, 196, 196);
+  overflow: hidden;
+}
+
+.background img {
+  width: 100%;
+}
+
+.opacity {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 50%;
+  width: 100%;
+  z-index: 2;
+  background-image: linear-gradient(to bottom, rgba(196,196,196,0), rgba(196,196,196,.8), rgba(196, 196, 196, 1), rgb(196, 196, 196));
+}
+
+.prevImage, .nextImage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.prevImage {
+  z-index: 0;
+}
+
+.nextImage {
+  z-index: 1;
+}
