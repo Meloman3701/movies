@@ -1,9 +1,10 @@
 import { useSpring, animated } from 'react-spring';
 import React, { useState, useEffect } from 'react';
-import style from './style.module.css';
+import style from './style.module.scss';
+import { Images } from './types';
 
 const Background = ({ url }) => {
-  const [images, setImages] = useState([,]);
+  const [images, setImages] = useState<Images>(['','']);
 
   const [{ y }, animate] = useSpring(() => ({
     y: 0

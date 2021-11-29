@@ -1,9 +1,10 @@
-import React, { memo, useEffect } from 'react';
-import style from './style.module.css';
+import React, { memo, useCallback, useEffect } from 'react';
+import style from './style.module.scss';
 import Image from './components/Image';
 import { useSpring, animated } from 'react-spring';
+import MovieProps from './types';
 
-const Movie = ({ index, active, onClick, title, background }) => {
+const Movie: React.FC<MovieProps> = ({ index, active, onClick, title, background }) => {
   const [{ y }, animate] = useSpring(() => ({
     y: 0
   }));

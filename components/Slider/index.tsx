@@ -1,10 +1,12 @@
 import React, { memo, useEffect, useRef, useState } from 'react';
-import style from './style.module.css';
+import style from './style.module.scss';
 import { useDrag } from '@use-gesture/react';
 import { useSpring, animated } from 'react-spring';
+import MovieProps from 'components/Movie/types';
+import SliderProps, { setFunction } from './types';
 
-const Slider = ({ children, onChange, className, countItems }) => {
-  const sliderRef = useRef();
+const Slider: React.FC<SliderProps> = ({ children, onChange, className, countItems }) => {
+  const sliderRef = useRef<HTMLDivElement>();
   const dragging = useRef(false);
   const [itemWidth, setItemWidth] = useState(0);
   const [styles, animate] = useSpring(() => ({
@@ -32,7 +34,7 @@ const Slider = ({ children, onChange, className, countItems }) => {
     from: () => [styles.x.get(), 0]
   });
 
-  const set = (item) => {
+  const set: setFunction = (item) => {
     if (!dragging.current) {
       animate({ x: item * itemWidth * -1 });
       onChange(item);

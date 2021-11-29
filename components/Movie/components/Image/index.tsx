@@ -1,5 +1,5 @@
-import React from 'react';
-import style from './style.module.css';
+import React, { memo } from 'react';
+import style from './style.module.scss';
 
 const Image = ({ background }) => {
   return (
@@ -12,4 +12,4 @@ const Image = ({ background }) => {
   )
 }
 
-export default Image;
+export default memo(Image);
