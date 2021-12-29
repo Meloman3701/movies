@@ -1,10 +1,13 @@
 import { useSpring, animated } from 'react-spring';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, FC } from 'react';
 import style from './style.module.scss';
-import { Images } from './types';
 
-const Background = ({ url }) => {
-  const [images, setImages] = useState<Images>(['','']);
+interface Props {
+  url: string
+}
+
+const Background: FC<Props> = props => {
+  const [images, setImages] = useState<[string, string]>(['','']);
 
   const [{ y }, animate] = useSpring(() => ({
     y: 0
@@ -12,9 +15,9 @@ const Background = ({ url }) => {
 
   useEffect(() => {
     const [first, second] = images;
-    setImages([url, first]);
+    setImages([props.url, first]);
     animate.start({ from: { y: -50 }, to: { y: 0 }});
-  }, [url]);
+  }, [props.url]);
 
   return (
     <div className={style.background}>

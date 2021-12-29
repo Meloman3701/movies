@@ -1,12 +1,16 @@
 import React, { memo } from 'react';
 import style from './style.module.scss';
 
-const Image = ({ background }) => {
+interface Props {
+  background: string;
+}
+
+const Image: React.FC<Props> = props => {
   return (
     <div
       className={style.image}
       style={{
-        backgroundImage: `url("${background}")`,
+        backgroundImage: `url("${props.background}")`,
       }}
     />
   )

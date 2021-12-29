@@ -22,7 +22,9 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Background url={movies[active]?.mainBackground}/>
+      {movies.length && movies[active] && (
+        <Background url={movies[active].mainBackground} />
+      )}
       <Slider onChange={setActive} className={styles.slider} countItems={movies.length}>
         {({ set }) => (
           movies.map((movie, index) => (

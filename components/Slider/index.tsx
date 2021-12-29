@@ -2,10 +2,17 @@ import React, { memo, useEffect, useRef, useState } from 'react';
 import style from './style.module.scss';
 import { useDrag } from '@use-gesture/react';
 import { useSpring, animated } from 'react-spring';
-import MovieProps from 'components/Movie/types';
-import SliderProps, { setFunction } from './types';
 
-const Slider: React.FC<SliderProps> = ({ children, onChange, className, countItems }) => {
+interface Props {
+  onChange: (item: number) => void;
+  countItems: number;
+  className: string;
+  children: ({ set: setFunction }) => React.ReactElement[];
+}
+
+type setFunction = (item: number) => void;
+
+const Slider: React.FC<Props> = props => {
   const sliderRef = useRef<HTMLDivElement>();
   const dragging = useRef(false);
   const [itemWidth, setItemWidth] = useState(0);
@@ -14,20 +21,21 @@ const Slider: React.FC<SliderProps> = ({ children, onChange, className, countIte
   }));
 
   useEffect(() => {
-    setItemWidth(sliderRef.current.offsetWidth / countItems);
-  }, [countItems]);
+    setItemWidth(sliderRef.current!.offsetWidth / props.countItems);
+  }, [props.countItems]);
 
   const bind = useDrag(({ down, offset: [x], movement: [mx] }) => {
+    const currentItem = Math.round(x / itemWidth);
+
     if (Math.abs(mx) > itemWidth / 4) {
       dragging.current = true;
     }
 
-    let currentItem = Math.round(x / itemWidth);
     animate({ x: down ? x : currentItem * itemWidth });
-    onChange(Math.abs(currentItem));
+    props.onChange(Math.abs(currentItem));
   }, {
     bounds: {
-      left: -itemWidth * (countItems - 1),
+      left: -itemWidth * (props.countItems - 1),
       right: 0
     },
     rubberband: true,
@@ -37,7 +45,7 @@ const Slider: React.FC<SliderProps> = ({ children, onChange, className, countIte
   const set: setFunction = (item) => {
     if (!dragging.current) {
       animate({ x: item * itemWidth * -1 });
-      onChange(item);
+      props.onChange(item);
     }
 
     dragging.current = false;
@@ -46,11 +54,11 @@ const Slider: React.FC<SliderProps> = ({ children, onChange, className, countIte
   return (
     <animated.div
       ref={sliderRef}
-      className={`${style.slider} ${className}`}
+      className={`${style.slider} ${props.className}`}
       style={{ ...styles }}
       {...bind()}
     >
-      {children({ set })}
+      {props.children({ set })}
     </animated.div>
   )
 }
