@@ -25,6 +25,7 @@ export default function Home() {
       {movies.length && movies[active] && (
         <Background url={movies[active].mainBackground} />
       )}
+
       <Slider onChange={setActive} className={styles.slider} countItems={movies.length}>
         {({ set }) => (
           movies.map((movie, index) => (
