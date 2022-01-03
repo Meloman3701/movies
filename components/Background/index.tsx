@@ -10,7 +10,7 @@ type Image = string | ArrayBuffer;
 
 const Background: FC<Props> = props => {
   const [images, setImages] = useState<[Image, Image]>(['','']);
-  const requestController = useRef<AbortController>()
+  const requestController = useRef<AbortController>();
 
   const [{ y }, animate] = useSpring(() => ({
     y: 0
@@ -23,10 +23,14 @@ const Background: FC<Props> = props => {
       return;
     }
 
-    getDataUrl(props.url).then(dataUrl => {
-      setImages([dataUrl, first]);
-      animate.start({ from: { y: -50 }, to: { y: 0 }});
-    });
+    const timer = setTimeout(() => {
+      getDataUrl(props.url).then(dataUrl => {
+        setImages([dataUrl, first]);
+        animate.start({ from: { y: -50 }, to: { y: 0 }});
+      });
+    }, 400);
+
+    return () => clearTimeout(timer);
   }, [props.url]);
 
   const getDataUrl = (url: string): Promise<Image> => (

@@ -4,19 +4,19 @@
       "id": 1,
       "title": "Dune",
       "background": "/posters/duna.jpg",
-      "mainBackground": "https://img5.goodfon.com/original/1920x1080/2/3f/diuna-dune-poster-2021-timoti-shalame-timothee-chalamet-paul.jpg"
+      "mainBackground": "/posters/duna-full.jpg"
     },
     {
       "id": 2,
       "title": "Spider Man",
-      "background": "https://m.media-amazon.com/images/M/MV5BZDEyN2NhMjgtMjdhNi00MmNlLWE5YTgtZGE4MzNjMTRlMGEwXkEyXkFqcGdeQXVyNDUyOTg3Njg@._V1_FMjpg_UX1000_.jpg",
-      "mainBackground": "https://img5.goodfon.com/original/1920x1200/5/1f/girl-city-action-superheroes-beautiful-home-italy-bridge-j-1.jpg"
+      "background": "/posters/spider-man.jpg",
+      "mainBackground": "/posters/spider-man-full.jpg"
     },
     {
       "id": 3,
       "title": "Iron Man",
-      "background": "https://m.media-amazon.com/images/M/MV5BMTczNTI2ODUwOF5BMl5BanBnXkFtZTcwMTU0NTIzMw@@._V1_.jpg",
-      "mainBackground": "https://img5.goodfon.com/original/1920x1200/c/b9/iron-man-rober-downe-jr-gwyneth-paltrow-2008-art-zheleznyi-c.jpg"
+      "background": "/posters/iron-man.jpg",
+      "mainBackground": "/posters/iron-man-full.jpg"
     }
   ]
 }

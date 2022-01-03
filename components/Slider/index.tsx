@@ -2,6 +2,7 @@ import React, { memo, useEffect, useRef, useState } from 'react';
 import style from './style.module.scss';
 import { useDrag } from '@use-gesture/react';
 import { useSpring, animated } from 'react-spring';
+import _ from 'lodash';
 
 interface Props {
   onChange: (item: number) => void;
@@ -16,23 +17,31 @@ const Slider: React.FC<Props> = props => {
   const sliderRef = useRef<HTMLDivElement>();
   const dragging = useRef(false);
   const [itemWidth, setItemWidth] = useState(0);
-  const [styles, animate] = useSpring(() => ({
-    x: 0
-  }));
+  const [styles, animate] = useSpring(() => ({ x: 0 }));
 
   useEffect(() => {
-    setItemWidth(sliderRef.current!.offsetWidth / props.countItems);
+    const resizeObserver = new ResizeObserver(() => {
+      props.countItems && setItemWidth(sliderRef.current.offsetWidth / props.countItems);
+    })
+
+    resizeObserver.observe(sliderRef.current)
+
+    return () => resizeObserver.unobserve(sliderRef.current);
   }, [props.countItems]);
 
-  const bind = useDrag(({ down, offset: [x], movement: [mx] }) => {
-    const currentItem = Math.round(x / itemWidth);
+  const bind = useDrag(({ down, offset: [x], movement: [mx], velocity: [vx], direction: [dx] }) => {
+    let currentItem = Math.round(x / itemWidth) * -1;
+    
+    if (!down && vx > .2 && inRange(currentItem - dx)) {
+      currentItem -= dx;
+    }
 
-    if (Math.abs(mx) > itemWidth / 4) {
+    if (Math.abs(mx) > 5) {
       dragging.current = true;
     }
 
-    animate({ x: down ? x : currentItem * itemWidth });
-    props.onChange(Math.abs(currentItem));
+    animate({ x: down ? x : (currentItem * -1) * itemWidth })
+    inRange(currentItem) && props.onChange(currentItem);
   }, {
     bounds: {
       left: -itemWidth * (props.countItems - 1),
@@ -50,6 +59,8 @@ const Slider: React.FC<Props> = props => {
 
     dragging.current = false;
   }
+
+  const inRange = (index: number): boolean => index >= 0 && index < props.countItems;
 
   return (
     <animated.div

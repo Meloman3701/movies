@@ -1,3 +1,5 @@
+@import 'screen.scss';
+
 .page {
   display: flex;
   align-items: center;
@@ -7,5 +9,9 @@
 }
 
 .slider {
-  margin-left: 130px;
+  margin-left: 60px;
+  
+  @media ($xs) {
+    margin-left: calc((100vw - 300px) / 2);
+  }
 }
