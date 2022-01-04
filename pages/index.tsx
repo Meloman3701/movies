@@ -27,7 +27,7 @@ export default function Home() {
       )}
 
       <Slider onChange={setActive} className={styles.slider} countItems={movies.length}>
-        {({ set }) => (
+        {({ set, dragging }) => (
           movies.map((movie, index) => (
             <Movie
               key={movie.id}
@@ -36,6 +36,7 @@ export default function Home() {
               title={movie.title}
               background={movie.background}
               onClick={set}
+              dragging={dragging}
             />
           ))
         )}

@@ -1,6 +1,6 @@
 import React, { memo, useEffect, useRef, useState } from 'react';
 import style from './style.module.scss';
-import { useDrag } from '@use-gesture/react';
+import { useDrag, useGesture } from '@use-gesture/react';
 import { useSpring, animated } from 'react-spring';
 import _ from 'lodash';
 
@@ -8,14 +8,14 @@ interface Props {
   onChange: (item: number) => void;
   countItems: number;
   className: string;
-  children: ({ set: setFunction }) => React.ReactElement[];
+  children: ({ set: setFunction, dragging: boolean }) => React.ReactElement[];
 }
 
 type setFunction = (item: number) => void;
 
 const Slider: React.FC<Props> = props => {
+  const [dragging, setDragging] = useState(false);
   const sliderRef = useRef<HTMLDivElement>();
-  const dragging = useRef(false);
   const [itemWidth, setItemWidth] = useState(0);
   const [styles, animate] = useSpring(() => ({ x: 0 }));
 
@@ -37,7 +37,7 @@ const Slider: React.FC<Props> = props => {
     }
 
     if (Math.abs(mx) > 5) {
-      dragging.current = true;
+      setDragging(true);
     }
 
     animate({ x: down ? x : (currentItem * -1) * itemWidth })
@@ -48,28 +48,30 @@ const Slider: React.FC<Props> = props => {
       right: 0
     },
     rubberband: true,
-    from: () => [styles.x.get(), 0]
-  });
+    from: () => [styles.x.get(), 0],
+  })
 
   const set: setFunction = (item) => {
-    if (!dragging.current) {
-      animate({ x: item * itemWidth * -1 });
-      props.onChange(item);
-    }
+    if (dragging) return;
 
-    dragging.current = false;
+    animate({ x: item * itemWidth * -1 });
+    props.onChange(item);
   }
 
   const inRange = (index: number): boolean => index >= 0 && index < props.countItems;
 
+  const stopDragging = () => setDragging(false);
+
   return (
     <animated.div
       ref={sliderRef}
+      onClick={stopDragging}
+      onTouchEnd={stopDragging}
       className={`${style.slider} ${props.className}`}
       style={{ ...styles }}
       {...bind()}
     >
-      {props.children({ set })}
+      {props.children({ set, dragging })}
     </animated.div>
   )
 }
