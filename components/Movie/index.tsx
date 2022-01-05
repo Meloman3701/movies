@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useRef } from 'react';
+import React, { memo, useCallback, useEffect, useRef, useState } from 'react';
 import style from './style.module.scss';
 import Image from './components/Image';
 import { useSpring, animated } from 'react-spring';
@@ -13,6 +13,7 @@ interface Props {
 }
 
 const Movie: React.FC<Props> = props => {
+  const [open, setOpen] = useState(false);
   const lock = useRef(false);
 
   const [{ y }, animate] = useSpring(() => ({
@@ -28,18 +29,32 @@ const Movie: React.FC<Props> = props => {
     lock.current = false;
   }
 
-  const ignoreClick = () => {
+  const onOpenModal = useCallback(() => {
+    setOpen(true);
+  }, []);
+
+  const onCloseModal = useCallback(() => {
+    setOpen(false);
+  }, []);
+
+  const ignoreClick = useCallback(() => {
     lock.current = true;
-  }
+  }, []);
 
   return (
-    <div className={style.item}>
+    <div className={style.item} style={{ zIndex: open ? 1 : 0 }}>
       <animated.div
         onClick={onClickHandler}
         className={style.container}
         style={{ y }}
       >
-        <Image background={props.background} dragging={props.dragging} onClick={ignoreClick} />
+        <Image
+          background={props.background}
+          dragging={props.dragging}
+          onClick={ignoreClick}
+          onOpenModal={onOpenModal}
+          onCloseModal={onCloseModal}
+        />
         <div className={style.title}>{props.title}</div>
       </animated.div>
     </div>
