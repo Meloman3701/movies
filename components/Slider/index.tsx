@@ -29,27 +29,42 @@ const Slider: React.FC<Props> = props => {
     return () => resizeObserver.unobserve(sliderRef.current);
   }, [props.countItems]);
 
-  const bind = useDrag(({ down, offset: [x], movement: [mx], velocity: [vx], direction: [dx] }) => {
-    let currentItem = Math.round(x / itemWidth) * -1;
+  const bind = useGesture({
+    onDrag: ({ down, offset: [x], movement: [mx], velocity: [vx], direction: [dx] }) => {
+      let currentItem = Math.round(x / itemWidth) * -1;
     
-    if (!down && vx > .2 && inRange(currentItem - dx)) {
-      currentItem -= dx;
-    }
+      if (!down && vx > .2 && inRange(currentItem - dx)) {
+        currentItem -= dx;
+      }
 
-    if (Math.abs(mx) > 5) {
-      setDragging(true);
-    }
+      if (Math.abs(mx) > 5) {
+        setDragging(true);
+      }
 
-    animate({ x: down ? x : (currentItem * -1) * itemWidth })
-    inRange(currentItem) && props.onChange(currentItem);
-  }, {
-    bounds: {
-      left: -itemWidth * (props.countItems - 1),
-      right: 0
+      animate({ x: down ? x : (currentItem * -1) * itemWidth })
+      inRange(currentItem) && props.onChange(currentItem);
     },
-    rubberband: true,
-    from: () => [styles.x.get(), 0],
-  })
+    onWheel: ({ offset: [x, y] }) => {
+      let currentItem = Math.round(-y / itemWidth) * -1;
+
+      if (inRange(currentItem)) {
+        animate({ x:  (currentItem * -1) * itemWidth })
+        props.onChange(currentItem);
+      }
+    }
+  }, {
+    drag: {
+      bounds: {
+        left: -itemWidth * (props.countItems - 1),
+        right: 0
+      },
+      rubberband: true,
+      from: () => [styles.x.get(), 0]
+    },
+    wheel: {
+      from: () => [0, -styles.x.get()]
+    }
+  });
 
   const set: setFunction = (item) => {
     if (dragging) return;
