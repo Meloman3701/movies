@@ -1,7 +1,9 @@
-import React, { memo, useEffect, useRef, useState } from 'react';
+import React, { memo, useState } from 'react';
 import style from './style.module.scss';
-import { useDrag, useGesture } from '@use-gesture/react';
+import { useGesture } from '@use-gesture/react';
 import { useSpring, animated } from 'react-spring';
+import { ResizeObserver } from '@juggle/resize-observer';
+import useMeasure from 'react-use-measure';
 import _ from 'lodash';
 
 interface Props {
@@ -15,19 +17,10 @@ type setFunction = (item: number) => void;
 
 const Slider: React.FC<Props> = props => {
   const [dragging, setDragging] = useState(false);
-  const sliderRef = useRef<HTMLDivElement>();
-  const [itemWidth, setItemWidth] = useState(0);
+  const [ref, sliderElement] = useMeasure({ polyfill: ResizeObserver })
   const [styles, animate] = useSpring(() => ({ x: 0 }));
 
-  useEffect(() => {
-    const resizeObserver = new ResizeObserver(() => {
-      props.countItems && setItemWidth(sliderRef.current.offsetWidth / props.countItems);
-    })
-
-    resizeObserver.observe(sliderRef.current)
-
-    return () => resizeObserver.unobserve(sliderRef.current);
-  }, [props.countItems]);
+  const itemWidth = sliderElement.width / props.countItems;
 
   const bind = useGesture({
     onDrag: ({ down, offset: [x], movement: [mx], velocity: [vx], direction: [dx] }) => {
@@ -79,7 +72,7 @@ const Slider: React.FC<Props> = props => {
 
   return (
     <animated.div
-      ref={sliderRef}
+      ref={ref}
       onClick={stopDragging}
       onTouchEnd={stopDragging}
       className={`${style.slider} ${props.className}`}

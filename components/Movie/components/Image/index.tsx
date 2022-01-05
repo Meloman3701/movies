@@ -1,5 +1,6 @@
 import React, { memo,  KeyboardEvent, useRef } from 'react';
 import { useSpring, animated } from 'react-spring';
+import { useRouter } from 'next/router';
 import style from './style.module.scss';
 
 interface Props {
@@ -12,6 +13,7 @@ interface Props {
 
 const Image: React.FC<Props> = (props) => {
   const ref = useRef<HTMLDivElement>();
+  const router = useRouter();
 
   const [styles, animate] = useSpring(() => ({
     x: 0,
@@ -19,6 +21,7 @@ const Image: React.FC<Props> = (props) => {
     width: '100%',
     height: '100%',
     borderRadius: '200px',
+    backgroundOpacity: 0,
   }));
 
   const openModal = () => {
@@ -35,8 +38,12 @@ const Image: React.FC<Props> = (props) => {
         width: window.innerWidth + 'px',
         height: window.innerHeight + 'px',
         borderRadius: '0px',
+        backgroundOpacity: 1
       },
-      onStart: props.onOpenModal
+      onStart: props.onOpenModal,
+      onRest: () => {
+        router.push('/movies/test')
+      }
     });
   }
 
@@ -49,6 +56,7 @@ const Image: React.FC<Props> = (props) => {
       width: box.width + 'px',
       height: box.height + 'px',
       borderRadius: '200px',
+      backgroundOpacity: 0,
       onRest: props.onCloseModal
     });
   }
@@ -75,7 +83,9 @@ const Image: React.FC<Props> = (props) => {
           ...styles
         }}
         onClick={onClickHandler}
-      />
+      >
+        <animated.div className={style.background} style={{ opacity: styles.backgroundOpacity }}/>
+      </animated.div>
     </div>
   )
 }
