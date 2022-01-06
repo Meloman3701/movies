@@ -23,7 +23,7 @@ const Slider: React.FC<Props> = props => {
   const itemWidth = sliderElement.width / props.countItems;
 
   const bind = useGesture({
-    onDrag: ({ down, offset: [x], movement: [mx], velocity: [vx], direction: [dx] }) => {
+    onDrag: ({ down, active, offset: [x], movement: [mx], velocity: [vx], direction: [dx] }) => {
       let currentItem = Math.round(x / itemWidth) * -1;
     
       if (!down && vx > .2 && inRange(currentItem - dx)) {
@@ -34,7 +34,7 @@ const Slider: React.FC<Props> = props => {
         setDragging(true);
       }
 
-      animate({ x: down ? x : (currentItem * -1) * itemWidth })
+      animate({ x: down ? x : (currentItem * -1) * itemWidth, immediate: name => active && name == 'x' })
       inRange(currentItem) && props.onChange(currentItem);
     },
     onWheel: ({ offset: [x, y] }) => {
