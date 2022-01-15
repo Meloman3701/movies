@@ -1,30 +1,36 @@
-import React, { memo, useEffect, useState } from 'react';
+import React, { memo, useCallback, useState } from 'react';
+import { useSpring, animated } from 'react-spring';
+import styles from './style.module.scss';
 
 interface Props {
   url: string;
+  preloadImage: string;
 }
 
 const Video: React.FC<Props> = props => {
-  const [windowSize, setWindowSize] = useState<[number, number]>([0, 0])
+  const [playing, setPlaying] = useState(false);
+  const { width, height } = useSpring({
+    from: {
+      width: '0%',
+      height: '0.5%'
+    },
+    to: async (next) => {
+      await next({ width: '100%' });
+      await next({ height: '100%' });
+    }
+  });
 
-  useEffect(() => {
-    const width = window.innerWidth;
-    const height = width * 9 / 21;
-    setWindowSize([width, height])
-  }, []);
-
-  const [width, height] = windowSize;
+  const onClickPlay = useCallback(() => {
+    setPlaying(!playing);
+  }, [playing]);
 
   return (
-    <div>
-      <iframe
-        width={width}
-        height={height}
-        src={props.url}
-        frameBorder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowFullScreen
-      />
+    <div className={styles.container}>
+      <div>
+        <animated.div className={styles.video} onClick={onClickPlay} style={{ width, height }}>
+
+        </animated.div>
+      </div>
     </div>
   )
 }

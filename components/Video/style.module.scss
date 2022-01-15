@@ -1,0 +1,31 @@
+.container {
+  position: relative;
+  width: 100%;
+  margin-top: 100px;
+
+  &:before {
+    content: "";
+    display: block;
+    padding-top: calc(100% * 9 / 16);
+  }
+
+  & > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    color: white;
+    text-align: center;
+  }
+}
+
+.video {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: black;
+}
