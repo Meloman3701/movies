@@ -4,7 +4,6 @@ import styles from './style.module.scss';
 
 interface Props {
   url: string;
-  preloadImage: string;
 }
 
 const Video: React.FC<Props> = props => {
