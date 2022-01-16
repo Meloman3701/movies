@@ -1,4 +1,5 @@
 import Video from 'components/Video';
+import Head from 'next/head';
 import React, { memo, useEffect, useState } from 'react';
 import styles from './style.module.scss';
 import Container from 'components/Grid/Container';
@@ -20,6 +21,11 @@ const MovieDetail = () => {
 
   return (
     <div className={styles.page}>
+      <Head>
+        <title>{details?.title || 'Movies'}</title>
+        <meta name="theme-color" content="#0d1a18" />
+      </Head>
+
       <Container>
         <Video url={details?.trailer} />
       </Container>

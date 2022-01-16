@@ -20,7 +20,7 @@ export default function Home() {
     <div className={styles.page}>
       <Head>
         <title>Movies</title>
-        <link rel="icon" href="/favicon.ico" />
+        <meta name="theme-color" content="#0d1a18" />
       </Head>
 
       {movies.length && movies[active] && (
