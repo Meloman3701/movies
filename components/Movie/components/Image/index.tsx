@@ -6,6 +6,7 @@ import style from './style.module.scss';
 interface Props {
   background: string;
   dragging: boolean;
+  uri: string;
   onClick?: () => void;
   onOpenModal?: () => void;
   onCloseModal?: () => void;
@@ -42,7 +43,7 @@ const Image: React.FC<Props> = (props) => {
       },
       onStart: props.onOpenModal,
       onRest: () => {
-        router.push('/movies/test')
+        router.push('/movies/' + props.uri)
       }
     });
   }

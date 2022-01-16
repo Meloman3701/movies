@@ -1,18 +1,19 @@
 import { useEffect, useState } from 'react';
 import Head from 'next/head'
-import moviesMock from 'public/movies.json';
 import styles from './style.module.scss';
 import { MovieType } from 'types';
 import Background from 'components/Background';
 import Slider from 'components/Slider';
 import Movie from 'components/Movie';
+import { getMovies } from 'helpers/movies_helper';
 
 export default function Home() {
   const [active, setActive] = useState(0);
   const [movies, setMovies] = useState<MovieType[]>([]);
 
   useEffect(() => {
-    setMovies(moviesMock.items);
+    const movies = getMovies();
+    setMovies(movies);
   }, []);
 
   return (
@@ -31,6 +32,7 @@ export default function Home() {
           movies.map((movie, index) => (
             <Movie
               key={movie.id}
+              uri={movie.uri}
               active={active === index}
               index={index}
               title={movie.title}

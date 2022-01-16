@@ -54,7 +54,7 @@ const Background: FC<Props> = props => {
         className={style.nextImage}
         style={{ y, opacity: y.to([-50, 0], [0, 1]), backgroundImage: `url(${firstImage})` }}
       />
-      <animated.div
+      <div
         className={style.prevImage}
         style={{ backgroundImage: `url(${secondImage})` }}
       />

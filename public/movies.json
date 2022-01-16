@@ -3,20 +3,26 @@
     {
       "id": 1,
       "title": "Dune",
+      "uri": "dune",
       "background": "/posters/duna.jpg",
-      "mainBackground": "/posters/duna-full.jpg"
+      "mainBackground": "/posters/duna-full.jpg",
+      "trailer": "https://www.youtube.com/embed/8g18jFHCLXk"
     },
     {
       "id": 2,
       "title": "Spider Man",
+      "uri": "spider-man",
       "background": "/posters/spider-man.jpg",
-      "mainBackground": "/posters/spider-man-full.jpg"
+      "mainBackground": "/posters/spider-man-full.jpg",
+      "trailer": "https://www.youtube.com/embed/JfVOs4VSpmA"
     },
     {
       "id": 3,
       "title": "Iron Man",
+      "uri": "iron-man",
       "background": "/posters/iron-man.jpg",
-      "mainBackground": "/posters/iron-man-full.jpg"
+      "mainBackground": "/posters/iron-man-full.jpg",
+      "trailer": "https://www.youtube.com/embed/8ugaeA-nMTc"
     }
   ]
 }

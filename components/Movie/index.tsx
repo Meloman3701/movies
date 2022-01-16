@@ -9,6 +9,7 @@ interface Props {
   title: string;
   background: string;
   dragging: boolean;
+  uri: string;
   onClick: (index: number) => void;
 }
 
@@ -49,6 +50,7 @@ const Movie: React.FC<Props> = props => {
         style={{ y }}
       >
         <Image
+          uri={props.uri}
           background={props.background}
           dragging={props.dragging}
           onClick={ignoreClick}
